@@ -1,0 +1,48 @@
+﻿<Window x:Class="MeetingOrganizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeetingOrganizer"
+        mc:Ignorable="d"
+        Title="Meeting Organizer" Height="450" Width="610" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="BtnAddEvent" Content="Add Event"
+                Grid.Column="1" Grid.Row="1" FontSize="18" Padding="10"
+                Margin="10" Click="BtnAddEvent_Click"></Button>
+        <ListBox Grid.Row="1" Grid.Column="2" Width="300" Grid.RowSpan="4">
+            <ListBoxItem Content="Test" FontSize="16"></ListBoxItem>
+        </ListBox>
+        <Button x:Name="BtnViewEvent" Content="View Event"
+                Grid.Column="3" Grid.Row="1" FontSize="18" Padding="10"
+                Margin="10"></Button>
+        <Button x:Name="BtnEditEvent" Content="Edit Event"
+                Grid.Column="3" Grid.Row="2" FontSize="18" Padding="10"
+                Margin="10"></Button>
+        <Button x:Name="BtnDeleteEvent" Content="Delete Event"
+                Grid.Column="3" Grid.Row="3" FontSize="18" Padding="10"
+                Margin="10"></Button>
+        <Button x:Name="BtnLunchAboutWindow" Content="About"
+                Grid.Column="3" Grid.Row="5" FontSize="18" Padding="10"
+                Margin="10" Click="BtnLunchAboutWindow_Click"></Button>
+
+    </Grid>
+</Window>
