@@ -13,14 +13,24 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <TextBlock FontSize="18" Margin="10" Grid.Row="1" Grid.Column="1">
@@ -30,6 +40,40 @@
                  Width="200">
             
         </TextBox>
-        
+        <TextBlock FontSize="18" Margin="10" Grid.Row="2" Grid.Column="1">
+            Number of Attendees
+        </TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="2" FontSize="18" Padding="10"
+                 Width="200">
+
+        </TextBox>
+        <TextBlock FontSize="18" Margin="10" Grid.Row="3" Grid.Column="1">
+            Start Date
+        </TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="2" FontSize="18" Padding="10" 
+                 Width="200">
+
+        </TextBox>
+        <TextBlock FontSize="18" Margin="10" Grid.Row="4" Grid.Column="1">
+            End Date
+        </TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="2" FontSize="18" Padding="10" 
+                 Width="200">
+
+        </TextBox>
+        <TextBlock FontSize="18" Margin="10" Grid.Row="5" Grid.Column="1">
+            Event Length
+        </TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="2" FontSize="18" Padding="10" 
+                 Width="200">
+
+        </TextBox>
+        <Button x:Name="BtnCancel" Content="Cancel"
+                Grid.Column="7" Grid.Row="8" FontSize="18" Padding="10"
+                Margin="10" Click="BtnCancel_Click"></Button>
+        <Button x:Name="BtnOK" Content="OK"
+                Grid.Column="8" Grid.Row="8" FontSize="18" Padding="10"
+                Margin="10"></Button>
+
     </Grid>
 </Window>

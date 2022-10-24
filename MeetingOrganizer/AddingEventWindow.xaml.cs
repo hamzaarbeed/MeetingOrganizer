@@ -23,5 +23,10 @@ namespace MeetingOrganizer
         {
             InitializeComponent();
         }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
