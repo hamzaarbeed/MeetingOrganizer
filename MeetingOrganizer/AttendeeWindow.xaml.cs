@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace MeetingOrganizer
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for AttendeeWindow.xaml
     /// </summary>
-    public partial class AddingEventWindow : Window
+    public partial class AttendeeWindow : Window
     {
-        public AddingEventWindow()
+        public AttendeeWindow()
         {
             InitializeComponent();
-        }
-
-        private void BtnAddanAttendee_Click(object sender, RoutedEventArgs e)
-        {
-            AttendeeWindow window = new AttendeeWindow();
-            window.Show();
         }
     }
 }
