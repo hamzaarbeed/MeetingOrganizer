@@ -29,7 +29,7 @@
                 Grid.Column="1" Grid.Row="1" FontSize="18" Padding="10"
                 Margin="10" Click="BtnAddEvent_Click"></Button>
         <ListBox Grid.Row="1" Grid.Column="2" Width="300" Grid.RowSpan="4">
-            <ListBoxItem Content="Test" FontSize="16"></ListBoxItem>
+            <ListBoxItem Content="Meeting With Group Project" FontSize="16"></ListBoxItem>
         </ListBox>
         <Button x:Name="BtnViewEvent" Content="View Event"
                 Grid.Column="3" Grid.Row="1" FontSize="18" Padding="10"

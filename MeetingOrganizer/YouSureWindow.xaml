@@ -1,0 +1,23 @@
+﻿<Window x:Class="MeetingOrganizer.YouSureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeetingOrganizer"
+        mc:Ignorable="d"
+        Title="Are you sure?" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" FontSize="18"> 
+                You selected the attendee Johnson to delete from the list of attendees.
+                <LineBreak/>
+                Are you sure? </TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button FontSize="18" Padding="10" Margin="10" Width="140">OK</Button>
+                <Button FontSize="18" Padding="10" Margin="10" Width="140">Cancel</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

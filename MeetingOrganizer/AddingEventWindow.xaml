@@ -38,14 +38,14 @@
         </TextBlock>
         <TextBox Grid.Row="1" Grid.Column="2" FontSize="18" 
                  Grid.ColumnSpan="2" Margin="10">
-            
+
         </TextBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
-            <TextBlock FontSize="16" Margin="0,10">
+        <TextBlock FontSize="16" Margin="0,10" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
             Selected Event Time: 11/1/2022 13:00
-            </TextBlock>
-     
-        </StackPanel>
+        </TextBlock>
+
+        <Button Grid.Column="5" Grid.Row="2" FontSize="18" 
+                Margin="10" x:Name="BtnEmailingAttendeeWindow" Click="BtnEmailingAttendeeWindow_Click">Email Attendees</Button>
 
         <TextBlock FontSize="18" Margin="10" Grid.Row="2" Grid.Column="1">
             Event Length
@@ -168,7 +168,7 @@
             Attendees
         </TextBlock>
         <ListBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="5">
-            <ListBoxItem Content="Test" FontSize="16"></ListBoxItem>
+            <ListBoxItem Content="Johnson" FontSize="16"></ListBoxItem>
         </ListBox>
 
         <Button Grid.Column="5" Grid.Row="4" FontSize="18" 
@@ -180,10 +180,12 @@
         <Button Grid.Column="5" Grid.Row="6" FontSize="18" 
                 Margin="10">Edit Attendee</Button>
         <Button Grid.Column="5" Grid.Row="7" FontSize="18" 
-                Margin="10">Delete Attendee</Button>
+                Margin="10"
+                x:Name="BtnDeleteAttendee" Click="BtnDeleteAttendee_Click"
+                >Delete Attendee</Button>
 
         <Button Grid.Column="5" Grid.Row="8" FontSize="18" 
-                Margin="10">Pick Event Time</Button>
+                Margin="10" x:Name="BtnPickEventTime" Click="BtnPickEventTime_Click">Pick Event Time</Button>
 
         <Button Grid.Column="3" Grid.Row="9" FontSize="18" 
                 Margin="10">OK</Button>

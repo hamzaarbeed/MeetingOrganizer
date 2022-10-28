@@ -1,0 +1,44 @@
+﻿<Window x:Class="MeetingOrganizer.EmailingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeetingOrganizer"
+        mc:Ignorable="d"
+        Title="EmailingWindow" Height="600" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Margin="10" FontSize="16">
+                    People who can attend
+                </TextBlock>
+                <ListBox Height="400" Margin="10" FontSize="16">
+                    <ListBoxItem>
+                        Johnson
+                    </ListBoxItem>
+                </ListBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Margin="10" FontSize="16">
+                    People who can't attend
+                </TextBlock>
+                <ListBox Height="400" Margin="10" FontSize="16">
+                    <ListBoxItem>
+
+                    </ListBoxItem>
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+
+        </StackPanel>
+        <Button Margin="10" FontSize="16" x:Name="BtnSendEmails" Click="BtnSendEmails_Click">
+            Send Emails
+        </Button>
+        <Button Margin="10" FontSize="16">
+            Cancel
+        </Button>
+    </StackPanel>
+</Window>

@@ -9,12 +9,29 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <TextBlock FontSize="18" Padding="30" >
-            This program was made by Code Sages team as a project for 
+        <TextBlock FontSize="18" Padding="30" HorizontalAlignment="Center" TextAlignment="Center">
+            
+            This application will help schedule an event that matches attendees availablilities
             <LineBreak/>
-            Here is a second line of about just for you.
             <LineBreak/>
-            You're welcome
+            This program was made by Code Sages team as a project for COSC 4320
+            <LineBreak/>
+            <LineBreak/>
+            Team Members:
+            <LineBreak/>
+            <LineBreak/>
+            Shawn Ferrell 
+            <LineBreak/>
+            Hamza Abuhussein 
+            <LineBreak/>
+            Phillip Barnes
+            <LineBreak/>
+            Enrique Perez 
+            <LineBreak/>
+            Andres Lezama
+            <LineBreak/>
+            John Rodriguez
+            <LineBreak/>
         </TextBlock>
     </Grid>
 </Window>

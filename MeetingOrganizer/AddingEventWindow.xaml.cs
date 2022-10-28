@@ -29,5 +29,23 @@ namespace MeetingOrganizer
             AttendeeWindow window = new AttendeeWindow();
             window.Show();
         }
+
+        private void BtnPickEventTime_Click(object sender, RoutedEventArgs e)
+        {
+            PickEventTimeWindow window= new PickEventTimeWindow();
+            window.Show();
+        }
+
+        private void BtnDeleteAttendee_Click(object sender, RoutedEventArgs e)
+        {
+            YouSureWindow window= new YouSureWindow();
+            window.Show();
+        }
+
+        private void BtnEmailingAttendeeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            EmailingWindow window= new EmailingWindow();
+            window.Show();
+        }
     }
 }
