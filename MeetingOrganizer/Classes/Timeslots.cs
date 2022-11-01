@@ -31,6 +31,7 @@ namespace MeetingOrganizer
             }
 
             //for each slot, check if each attendee has a conflict. If an attendee has a conflict, add their Guid to that timeslot
+            //*Possible optimization* The end of the event range should have every attendee in conflict. Maybe we should cut it off?
             for (int slotNumber=0;slotNumber<slots; slotNumber++)
             {
                 foreach (Attendee at in attendees)
@@ -49,6 +50,38 @@ namespace MeetingOrganizer
                 currentTime+=slotLength;//add 15 minutes to the time to match the timeslot's time
             }
             
+        }
+        /// <summary>
+        /// Returns a list of timeslots with the least conflicts along with the attendees' Guid that can't attend
+        /// </summary>
+        /// <returns>list of pairs containing timeslot (as DateTime) and attendee IDs (HashSet<Guid>) who can't make it</returns>
+        List<Tuple<DateTime, HashSet<Guid>>> BestTimeslots(DateTime start)
+        {
+            TimeSpan slotLength = TimeSpan.FromMinutes(15);
+            int numConflicts = int.MaxValue;//stores the minimum number of conflicts found so far when iterating; make this as high as possible so almost everything is lower
+            DateTime slot;//store the time of the slot
+            HashSet<Guid> attendeesUnableToAttend;//store the attendees that can't attend
+            List<Tuple<DateTime, HashSet<Guid>>> bestTimeslots = new();//what we will return
+
+            //go through conflicts, keep track of minimum conflicts and a list that has that number of conflicts, reset list if a lower # conflicts encountered
+            for (int slotIndex = 0; slotIndex < slotConflictsList.Count; slotIndex++)//iterate timeslots
+            {
+                if (slotConflictsList[slotIndex].Count;<numConflicts)
+                {
+                    numConflicts=slotConflictsList[slotIndex].Count;
+                    bestTimeslots=new();
+                }
+                //if the number of conflicts in the timeslot is lower than the current number of conflicts,
+                //add that timeslot to the result
+                if (slotConflictsList[slotIndex].Count==numConflicts)
+                {
+                    slot=start+(slotIndex*slotLength);
+                    attendeesUnableToAttend=slotConflictsList[slotIndex];
+                    bestTimeslots.Add(Tuple.Create(slot, attendeesUnableToAttend));
+
+                }
+            }
+            return bestTimeslots;
         }
     }
 }

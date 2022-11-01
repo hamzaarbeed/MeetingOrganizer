@@ -9,5 +9,6 @@ namespace MeetingOrganizer
     internal class Availability
     {
         public List<DateTimeRange> timesAvailable { get; private set; }
+        //public Add(DateTimeRange dtr) { }
     }
 }

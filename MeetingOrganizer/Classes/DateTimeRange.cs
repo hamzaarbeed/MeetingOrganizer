@@ -16,33 +16,6 @@ namespace MeetingOrganizer
             this.end = end;
         }
         /// <summary>
-        /// Merges this and another DateTimeRange if they overlap. The merged result will be a new DateTimeRange. Throws an exception if there is no overlap.
-        /// </summary>
-        /// <param name="otherDTR">The DateTimeRange to merge with this one</param>
-        /// <returns>A new DateTimeRange which merges the two DateTimeRanges</returns>
-        public DateTimeRange Merge(DateTimeRange otherDTR)
-        {
-            DateTime otherStart = dtr.start;
-            DateTime otherEnd = dtr.end;
-            DateTime newStart = dtr.start;
-            DateTime newEnd = dtr.end;
-
-            if (!(this.Overlaps(otherDTR)))
-                throw InvalidOperationException;
-
-
-            //check the 4, if within then don't need
-            if (start<=otherStart && otherStart<=end)
-                newStart = start;
-            else
-                newStart = otherStart;
-            if (start<=otherEnd && otherEnd<=end)
-                newEnd = end;
-            else
-                newEnd = otherEnd;
-            return new DateTimeRange(newStart, newEnd);
-        }
-        /// <summary>
         /// Checks if this DateTimeRange overlaps with another DateTimeRange. 
         /// Overlap means that the ranges intersect (contain the same DateTime) at some point (including endpoints)
         /// </summary>
@@ -60,5 +33,33 @@ namespace MeetingOrganizer
                 return true;
             return false;
         }
+        /// <summary>
+        /// Merges this and another DateTimeRange if they overlap. The merged result will be a new DateTimeRange. Throws an exception if there is no overlap.
+        /// </summary>
+        /// <param name="otherDTR">The DateTimeRange to merge with this one</param>
+        /// <returns>A new DateTimeRange which merges the two DateTimeRanges</returns>
+        public DateTimeRange Merge(DateTimeRange otherDTR)
+        {
+            DateTime otherStart = dtr.start;
+            DateTime otherEnd = dtr.end;
+            DateTime newStart = dtr.start;//start time of the new range
+            DateTime newEnd = dtr.end;//end time of the new range
+
+            if (!(this.Overlaps(otherDTR)))
+                throw InvalidOperationException;
+
+
+            //check the 4 overlap conditions, if the range's end is within the other's range then we don't need that end
+            if (start<=otherStart && otherStart<=end)
+                newStart = start;
+            else
+                newStart = otherStart;
+            if (start<=otherEnd && otherEnd<=end)
+                newEnd = end;
+            else
+                newEnd = otherEnd;
+            return new DateTimeRange(newStart, newEnd);
+        }
+        
     }
 }
