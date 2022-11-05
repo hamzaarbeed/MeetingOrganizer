@@ -1,11 +1,12 @@
-﻿<Window x:Class="MeetingOrganizer.AddingEventWindow"
+﻿<Window x:Class="MeetingOrganizer.EventWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
-        Title="Adding an Event" Height="550" Width="750"
+        Activated="EventWindow_Activated"
+        Title="Events" Height="550" Width="750"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
@@ -37,9 +38,10 @@
             Event Name
         </TextBlock>
         <TextBox Grid.Row="1" Grid.Column="2" FontSize="18" 
-                 Grid.ColumnSpan="2" Margin="10">
-
+                 Grid.ColumnSpan="2" Margin="10"
+                 x:Name="TxtbxEventName">
         </TextBox>
+
         <TextBlock FontSize="16" Margin="0,10" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
             Selected Event Time: 11/1/2022 13:00
         </TextBlock>
@@ -50,7 +52,7 @@
         <TextBlock FontSize="18" Margin="10" Grid.Row="2" Grid.Column="1">
             Event Length
         </TextBlock>
-        <ComboBox Grid.Row="2" Grid.Column="2" Margin="10" FontSize="18" Width="80">
+        <ComboBox x:Name="CmbBxEventLength" Grid.Row="2" Grid.Column="2" Margin="10" FontSize="18" Width="80">
             <ComboBoxItem>00:15</ComboBoxItem>
             <ComboBoxItem>00:30</ComboBoxItem>
             <ComboBoxItem>00:45</ComboBoxItem>
@@ -155,30 +157,30 @@
             From :
         </TextBlock>
 
-        <DatePicker  Margin="10" Grid.Row="3" Grid.Column="3" FontSize="16" 
+        <DatePicker SelectedDateChanged ="DtPkrEventRangeFrom_SelectedDateChanged" x:Name="DtPkrEventRangeFrom" Margin="10" Grid.Row="3" Grid.Column="3" FontSize="16" 
                      Width="200"></DatePicker>
         <TextBlock FontSize="18" Margin="10" Grid.Row="3" Grid.Column="4">
             To :
         </TextBlock>
 
-        <DatePicker  Margin="10" Grid.Row="3" Grid.Column="5" 
+        <DatePicker  x:Name="DtPkrEventRangeTo" Margin="10" Grid.Row="3" Grid.Column="5" 
                      FontSize="16" Width="200"></DatePicker>
 
         <TextBlock FontSize="18" Margin="10" Grid.Row="4" Grid.Column="1">
             Attendees
         </TextBlock>
-        <ListBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="5">
-            <ListBoxItem Content="Johnson" FontSize="16"></ListBoxItem>
+        <ListBox x:Name="LstBxAttendeesList" FontSize="16" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="5">
+            
         </ListBox>
 
         <Button Grid.Column="5" Grid.Row="4" FontSize="18" 
                 Margin="10"
                 x:Name="BtnAddanAttendee" Click="BtnAddanAttendee_Click"
                 >Add an Attendee</Button>
-        <Button Grid.Column="5" Grid.Row="5" FontSize="18" 
-                Margin="10">View Attendee</Button>
-        <Button Grid.Column="5" Grid.Row="6" FontSize="18" 
-                Margin="10">Edit Attendee</Button>
+        <Button x:Name="BtnViewAttendee" Grid.Column="5" Grid.Row="5" FontSize="18" 
+                Margin="10" Click="BtnViewAttendee_Click">View Attendee</Button>
+        <Button x:Name="BtnEditAttendee" Grid.Column="5" Grid.Row="6" FontSize="18" 
+                Margin="10" Click="BtnEditAttendee_Click">Edit Attendee</Button>
         <Button Grid.Column="5" Grid.Row="7" FontSize="18" 
                 Margin="10"
                 x:Name="BtnDeleteAttendee" Click="BtnDeleteAttendee_Click"
@@ -187,10 +189,10 @@
         <Button Grid.Column="5" Grid.Row="8" FontSize="18" 
                 Margin="10" x:Name="BtnPickEventTime" Click="BtnPickEventTime_Click">Pick Event Time</Button>
 
-        <Button Grid.Column="3" Grid.Row="9" FontSize="18" 
-                Margin="10">OK</Button>
-        <Button Grid.Column="5" Grid.Row="9" FontSize="18" 
-                Margin="10">Cancel</Button>
+        <Button x:Name="BtnOk" Grid.Column="3" Grid.Row="9" FontSize="18" 
+                Margin="10" Click="BtnOk_Click">OK</Button>
+        <Button x:Name="BtnCancel" Grid.Column="5" Grid.Row="9" FontSize="18" 
+                Margin="10" Click="BtnCancel_Click">Cancel</Button>
         
 
 

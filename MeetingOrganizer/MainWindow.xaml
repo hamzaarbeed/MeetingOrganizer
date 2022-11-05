@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
-        Title="Meeting Organizer" Height="450" Width="610" ResizeMode="NoResize"
+        Loaded="MainWindow_Loaded"
+        Activated="MainWindow_Activated"
+        Title="Meeting Organizer" Height="450" Width="650" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -28,21 +30,26 @@
         <Button x:Name="BtnAddEvent" Content="Add Event"
                 Grid.Column="1" Grid.Row="1" FontSize="18" Padding="10"
                 Margin="10" Click="BtnAddEvent_Click"></Button>
-        <ListBox Grid.Row="1" Grid.Column="2" Width="300" Grid.RowSpan="4">
-            <ListBoxItem Content="Meeting With Group Project" FontSize="16"></ListBoxItem>
+        <ListBox Grid.Row="1" Grid.Column="2" Width="300" Grid.RowSpan="4"
+                 x:Name="LstBxEventsList" FontSize="16">
+
         </ListBox>
         <Button x:Name="BtnViewEvent" Content="View Event"
                 Grid.Column="3" Grid.Row="1" FontSize="18" Padding="10"
-                Margin="10"></Button>
+                Margin="10" Click="BtnViewEvent_Click"></Button>
         <Button x:Name="BtnEditEvent" Content="Edit Event"
                 Grid.Column="3" Grid.Row="2" FontSize="18" Padding="10"
-                Margin="10"></Button>
+                Margin="10" Click="BtnEditEvent_Click"></Button>
         <Button x:Name="BtnDeleteEvent" Content="Delete Event"
                 Grid.Column="3" Grid.Row="3" FontSize="18" Padding="10"
-                Margin="10"></Button>
+                Margin="10" Click="BtnDeleteEvent_Click"
+                ></Button>
         <Button x:Name="BtnLunchAboutWindow" Content="About"
                 Grid.Column="3" Grid.Row="5" FontSize="18" Padding="10"
                 Margin="10" Click="BtnLunchAboutWindow_Click"></Button>
+        <Button x:Name="BtnSaveChanges" Content="Save Changes"
+                Grid.Column="1" Grid.Row="5" FontSize="18" Padding="10"
+                Margin="10" Click="BtnSaveChanges_Click"></Button>
 
     </Grid>
 </Window>

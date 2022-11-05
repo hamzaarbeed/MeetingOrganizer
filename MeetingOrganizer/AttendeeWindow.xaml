@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
         Title="AttendeeWindow" Height="800" Width="800"
+        Loaded="AttendeeWindow_Loaded"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
@@ -34,14 +35,14 @@
         <TextBlock FontSize="18" Margin="10" Grid.Row="1" Grid.Column="1" >
             Attendee Name
         </TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="2" FontSize="18" 
+        <TextBox x:Name="TxtBxAttendeeName" Grid.Row="1" Grid.Column="2" FontSize="18" 
                  Margin="10" Grid.ColumnSpan="2">
         </TextBox>
 
         <TextBlock FontSize="18" Margin="10" Grid.Row="2" Grid.Column="1">
             Attendee Email
         </TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="2" FontSize="18" 
+        <TextBox x:Name="TxtBxAttendeeEmail" Grid.Row="2" Grid.Column="2" FontSize="18" 
                  Margin="10"  Grid.ColumnSpan="2">
         </TextBox>
 
@@ -50,29 +51,25 @@
         <TextBlock FontSize="18" Margin="10" Grid.Row="3" Grid.Column="1">
             Event Range
         </TextBlock>
-        <TextBlock FontSize="18" Margin="10" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
-            10/30/2022 - 11/12/2022
+        <TextBlock x:Name="TxtBlockEventRange" FontSize="18" Margin="10" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+            
         </TextBlock>
 
-        <ListBox Grid.Row="7" Grid.Column="3"   FontSize="16" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <ListBoxItem Content="10/31/2022 08:00 - 10/31/2022 15:00"></ListBoxItem>
-            <ListBoxItem Content="11/02/2022 07:00 - 11/02/2022 14:00"></ListBoxItem>
-            <ListBoxItem Content="11/10/2022 08:00 - 11/10/2022 15:00"></ListBoxItem>
-            <ListBoxItem Content="11/12/2022 08:00 - 11/12/2022 15:00"></ListBoxItem>
+        <ListBox x:Name="LstBxAvailabilityList" Grid.Row="7" Grid.Column="3"   FontSize="16" Grid.RowSpan="2" Grid.ColumnSpan="2">
         </ListBox>
-        <Button Grid.Column="1" Grid.Row="5" FontSize="18" 
-                Margin="10" Grid.RowSpan="2">Add Availability to the List
+        <Button x:Name="BtnAddAvailability" Grid.Column="1" Grid.Row="5" FontSize="18" 
+                Margin="10" Grid.RowSpan="2" Click="BtnAddAvailability_Click">Add Availability to the List
         </Button>
-        <Button Grid.Column="1" Grid.Row="7" FontSize="18" 
-                Margin="10" Padding="10">Remove Availability from the List
+        <Button x:Name="BtnRemoveAvailability" Grid.Column="1" Grid.Row="7" FontSize="18" 
+                Margin="10" Padding="10" Click="BtnRemoveAvailability_Click">Remove Availability from the List
         </Button>
 
         <TextBlock FontSize="18" Margin="10" Grid.Row="5" Grid.Column="2">
             From:
         </TextBlock>
-        <DatePicker  Margin="10" Grid.Row="5" Grid.Column="3" 
+        <DatePicker SelectedDateChanged="DtPkrAvailabilityFrom_SelectedDateChanged" x:Name="DtPkrAvailabilityFrom" Margin="10" Grid.Row="5" Grid.Column="3" 
                      FontSize="16" Width="200"></DatePicker>
-        <ComboBox Grid.Row="5" Grid.Column="4" Margin=" 10">
+        <ComboBox SelectionChanged="CmbBxAvailabilityFrom_SelectionChanged" x:Name="CmbBxAvailabilityFrom" Grid.Row="5" Grid.Column="4" Margin=" 10">
             <ComboBoxItem>00:00</ComboBoxItem>
             <ComboBoxItem>00:15</ComboBoxItem>
             <ComboBoxItem>00:30</ComboBoxItem>
@@ -174,9 +171,9 @@
         <TextBlock FontSize="18" Margin="10" Grid.Row="6" Grid.Column="2">
             To:
         </TextBlock>
-        <DatePicker  Margin="10" Grid.Row="6" Grid.Column="3" 
+        <DatePicker  x:Name="DtPkrAvailabilityTo" Margin="10" Grid.Row="6" Grid.Column="3" 
                      FontSize="16" Width="200"></DatePicker>
-        <ComboBox Grid.Row="6" Grid.Column="4" Margin=" 10">
+        <ComboBox x:Name="CmbBxAvailabilityTo" Grid.Row="6" Grid.Column="4" Margin=" 10">
             <ComboBoxItem>00:00</ComboBoxItem>
             <ComboBoxItem>00:15</ComboBoxItem>
             <ComboBoxItem>00:30</ComboBoxItem>
@@ -274,8 +271,8 @@
             <ComboBoxItem>23:30</ComboBoxItem>
             <ComboBoxItem>23:45</ComboBoxItem>
         </ComboBox>
-        <Button Grid.Column="3" Grid.Row="9" FontSize="18" 
-                Margin="10" Padding="10" Width="140"> OK
+        <Button x:Name="BtnOk" Grid.Column="3" Grid.Row="9" FontSize="18" 
+                Margin="10" Padding="10" Width="140" Click="BtnOk_Click"> OK
         </Button>
         <Button Grid.Column="4" Grid.Row="9" FontSize="18" 
                 Margin="10" Padding="10" Width="140">Cancel

@@ -15,12 +15,19 @@ namespace MeetingOrganizer
             this.start = start;
             this.end = end;
         }
+
+        override
+        public string ToString()
+        {
+            return start.ToString("MM/dd/yyyy HH:mm") + " - " + end.ToString("MM/dd/yyyy HH:mm");
+        } 
         /// <summary>
         /// Checks if this DateTimeRange overlaps with another DateTimeRange. 
         /// Overlap means that the ranges intersect (contain the same DateTime) at some point (including endpoints)
         /// </summary>
         /// <param name="otherDTR">The other DateTimeRange</param>
         /// <returns>true if it overlaps, false if not</returns>
+        /*
         public bool Overlaps(DateTimeRange otherDTR)
         {
             DateTime otherStart = dtr.start;
@@ -33,11 +40,13 @@ namespace MeetingOrganizer
                 return true;
             return false;
         }
+        */
         /// <summary>
         /// Merges this and another DateTimeRange if they overlap. The merged result will be a new DateTimeRange. Throws an exception if there is no overlap.
         /// </summary>
         /// <param name="otherDTR">The DateTimeRange to merge with this one</param>
         /// <returns>A new DateTimeRange which merges the two DateTimeRanges</returns>
+        /*
         public DateTimeRange Merge(DateTimeRange otherDTR)
         {
             DateTime otherStart = dtr.start;
@@ -60,6 +69,6 @@ namespace MeetingOrganizer
                 newEnd = otherEnd;
             return new DateTimeRange(newStart, newEnd);
         }
-        
+        */
     }
 }
