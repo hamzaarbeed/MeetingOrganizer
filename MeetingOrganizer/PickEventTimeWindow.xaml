@@ -9,12 +9,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
-    <ListBox FontSize="18" >
-        <ListBoxItem>
-            11/1/22 13:00
-        </ListBoxItem>
-        <ListBoxItem>
-            11/3/22 14:15
-        </ListBoxItem>
+    <ListBox x:Name="LstBxTimeslots"  FontSize="18" >
+        
     </ListBox>
 </Window>

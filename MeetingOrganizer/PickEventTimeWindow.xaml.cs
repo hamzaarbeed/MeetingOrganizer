@@ -22,6 +22,17 @@ namespace MeetingOrganizer
         public PickEventTimeWindow()
         {
             InitializeComponent();
+            for (int i = 0; i < Timeslots.bestTimeslots.Count; i++)
+            {
+                LstBxTimeslots.Items.Add(Timeslots.bestTimeslots[i].dateAndTime.ToString());
+            }
+        }
+        private void PickEventTimeWindow_Activated(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Timeslots.bestTimeslots.Count; i++)
+            {
+                LstBxTimeslots.Items.Add(Timeslots.bestTimeslots[i].dateAndTime.ToString());
+            }
         }
     }
 }

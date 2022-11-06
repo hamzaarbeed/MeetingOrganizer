@@ -40,6 +40,8 @@ namespace MeetingOrganizer
 
         private void BtnPickEventTime_Click(object sender, RoutedEventArgs e)
         {
+            Timeslots.CalculateConflicts(Event.eventsList[eventIndex].eventRange, Event.eventsList[eventIndex].duration, Event.eventsList[eventIndex].attendees);
+            Timeslots.BestTimeslots(Event.eventsList[eventIndex].eventRange.start);
             PickEventTimeWindow window= new PickEventTimeWindow();
             window.Show();
         }
