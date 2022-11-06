@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
+        Activated="PickEventTimeWindow_Activated"
         Title="Pick Event Time Window" Height="450" Width="450"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">

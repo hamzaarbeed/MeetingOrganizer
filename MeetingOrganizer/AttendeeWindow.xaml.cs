@@ -98,5 +98,10 @@ namespace MeetingOrganizer
             Event.eventsList[eventIndex].attendees[attendeeIndex].availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
             LstBxAvailabilityList.Items.RemoveAt(LstBxAvailabilityList.SelectedIndex);
         }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

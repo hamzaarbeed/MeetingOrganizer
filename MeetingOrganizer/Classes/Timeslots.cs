@@ -70,7 +70,6 @@ namespace MeetingOrganizer
             {
                 if (slotConflictsList[slotIndex].Count<numConflicts)
                 {
-                    Console.WriteLine(slotConflictsList[slotIndex].Count);
                     numConflicts=slotConflictsList[slotIndex].Count;
                     bestTimeslots=new();
                 }
@@ -85,7 +84,19 @@ namespace MeetingOrganizer
                 }
             }
             
-            return bestTimeslots;
+            return bestTimeslots;//we can change it to only return a list<DateTime> later
+        }
+        /// <summary>
+        /// Takes a timeslot and returns the indices of attendees who cannot attend that timeslot
+        /// </summary>
+        /// <param name="start">start of the event</param>
+        /// <param name="timePicked">the timeslot chosen</param>
+        /// <returns>HashSet containing indices of absent attendees</returns>
+        public static HashSet<int> ConflictsForTimeslot(DateTime start, DateTime timePicked)
+        {
+            //*Possible Issue* We may need to check if the timeslot exists in the slotConflictsList
+            TimeSpan slotLength = TimeSpan.FromMinutes(15);
+            return slotConflictsList[(int)((timePicked-start)/slotLength)];
         }
     }
 }
