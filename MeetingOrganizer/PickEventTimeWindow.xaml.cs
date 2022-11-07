@@ -19,6 +19,7 @@ namespace MeetingOrganizer
     /// </summary>
     public partial class PickEventTimeWindow : Window
     {
+        public int eventIndex { get; set; }
         public PickEventTimeWindow()
         {
             InitializeComponent();
@@ -28,6 +29,20 @@ namespace MeetingOrganizer
             for (int i = 0; i < Timeslots.bestTimeslots.Count; i++)
             {
                 LstBxTimeslots.Items.Add(Timeslots.bestTimeslots[i].dateAndTime.ToString());
+            }
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            if (eventIndex != -1 && LstBxTimeslots.SelectedIndex != -1)
+            {
+                Event.eventsList[eventIndex].chosenTimeSlot = Timeslots.bestTimeslots[LstBxTimeslots.SelectedIndex].dateAndTime;
+                this.Close();
             }
         }
     }

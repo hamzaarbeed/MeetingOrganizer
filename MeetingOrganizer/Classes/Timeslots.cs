@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MeetingOrganizer
 {
-    //call CalculatConflicts() and BestTimeslots() and the lists will be stored in the static variables
+    //call CalculateConflicts() and BestTimeslots() and the lists will be stored in the static variables
     internal class Timeslots
     {
         public static List<HashSet<int>> slotConflictsList { get; private set; }
@@ -97,6 +97,16 @@ namespace MeetingOrganizer
             //*Possible Issue* We may need to check if the timeslot exists in the slotConflictsList
             TimeSpan slotLength = TimeSpan.FromMinutes(15);
             return slotConflictsList[(int)((timePicked-start)/slotLength)];
+        }
+        public static (HashSet<int> canAttend, HashSet<int> cantAttend) WhoCanAndCannotAttend(DateTime start, DateTime timePicked, int numAttendees)
+        {
+            HashSet<int> cantAttend = ConflictsForTimeslot(start, timePicked);
+            HashSet<int> canAttend=new();
+            for (int i=0; i<numAttendees; i++)
+            {
+                canAttend.Add(i);
+            }
+            return (canAttend.Except<int>(cantAttend).ToHashSet<int>(), cantAttend);//not sure about first element
         }
     }
 }

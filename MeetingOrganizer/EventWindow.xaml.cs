@@ -42,7 +42,8 @@ namespace MeetingOrganizer
         {
             Timeslots.CalculateConflicts(Event.eventsList[eventIndex].eventRange, Event.eventsList[eventIndex].duration, Event.eventsList[eventIndex].attendees);
             Timeslots.BestTimeslots(Event.eventsList[eventIndex].eventRange.start);
-            PickEventTimeWindow window= new PickEventTimeWindow();
+            PickEventTimeWindow window = new PickEventTimeWindow();
+            window.eventIndex=eventIndex;
             window.Show();
         }
 
@@ -55,6 +56,7 @@ namespace MeetingOrganizer
         private void BtnEmailingAttendeeWindow_Click(object sender, RoutedEventArgs e)
         {
             EmailingWindow window= new EmailingWindow();
+            window.eventIndex = eventIndex;
             window.Show();
         }
 
@@ -68,6 +70,7 @@ namespace MeetingOrganizer
                 DtPkrEventRangeFrom.Text = Event.eventsList[eventIndex].eventRange.start.ToString();
                 DtPkrEventRangeTo.Text = Event.eventsList[eventIndex].eventRange.end.ToString();
                 List<Attendee> list = Event.eventsList[eventIndex].attendees;
+                TxtblkChosenTimeslot.Text = Event.eventsList[eventIndex].chosenTimeSlot.ToString();
                 if (list != null)
                 {
                     LstBxAttendeesList.Items.Clear();
