@@ -48,6 +48,7 @@ namespace MeetingOrganizer
             PickEventTimeWindow window = new PickEventTimeWindow();
             window.eventIndex=eventIndex;
             window.Show();
+
         }
 
         private void BtnDeleteAttendee_Click(object sender, RoutedEventArgs e)

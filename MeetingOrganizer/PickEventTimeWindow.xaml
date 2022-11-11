@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
         Activated="PickEventTimeWindow_Activated"
-        Title="Pick Event Time Window" Height="450" Width="450"
+        Title="Pick Event Time Window" Height="450" Width="550"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
@@ -22,17 +22,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
-        <ListBox x:Name="LstBxTimeslots"  FontSize="18" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" >
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="First: Pick Event Time Range">
 
+        </TextBlock>
+        <ListBox x:Name="LstBxTimeslots"  Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+            <ListBoxItem>12/2/2022 13:00 - 12/2/2022 16:00</ListBoxItem>
         </ListBox>
-        <Button x:Name="BtnOk" Grid.Column="3" Grid.Row="3" FontSize="18" 
+        <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="Second: Pick Event Time Slot"></TextBlock>
+        <ComboBox x:Name="CmbBxEventTimeSlot" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+
+        </ComboBox>
+        <Button x:Name="BtnOk" Grid.Column="3" Grid.Row="4" FontSize="18" 
                 Margin="10" Click="BtnOk_Click">OK</Button>
-        <Button x:Name="BtnCancel" Grid.Column="4" Grid.Row="3" FontSize="18" 
+        <Button x:Name="BtnCancel" Grid.Column="4" Grid.Row="4" FontSize="18" 
                 Margin="10" Click="BtnCancel_Click">Cancel</Button>
     </Grid>
 </Window>
