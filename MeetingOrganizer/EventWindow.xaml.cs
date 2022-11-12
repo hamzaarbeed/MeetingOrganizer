@@ -30,42 +30,54 @@ namespace MeetingOrganizer
 
         private void BtnAddanAttendee_Click(object sender, RoutedEventArgs e)
         {
-            saveCreateEvent();
+            if (timesExist())
+            {
+                saveCreateEvent();
+                AttendeeWindow window = new AttendeeWindow();
+                window.eventIndex = eventIndex;
+                window.Show();
+            }
 
-            AttendeeWindow window = new AttendeeWindow();
-            window.eventIndex = eventIndex;
-            window.Show();
         }
 
 
         private void BtnPickEventTime_Click(object sender, RoutedEventArgs e)
         {
-            PickEventTimeWindow window= new PickEventTimeWindow();
+            Timeslots.CalculateConflicts(Event.eventsList[eventIndex].eventRange, Event.eventsList[eventIndex].duration, Event.eventsList[eventIndex].attendees);
+            Timeslots.BestTimeslots(Event.eventsList[eventIndex].eventRange.start);
+            PickEventTimeWindow window = new PickEventTimeWindow();
+            window.eventIndex=eventIndex;
             window.Show();
+
         }
 
         private void BtnDeleteAttendee_Click(object sender, RoutedEventArgs e)
         {
-            Event.eventsList[eventIndex].attendees.RemoveAt(LstBxAttendeesList.SelectedIndex);
-            LstBxAttendeesList.Items.RemoveAt(LstBxAttendeesList.SelectedIndex);
+            if (eventExists() && attendeeSelected())
+            {
+                Event.eventsList[eventIndex].attendees.RemoveAt(LstBxAttendeesList.SelectedIndex);
+                LstBxAttendeesList.Items.RemoveAt(LstBxAttendeesList.SelectedIndex);
+            }
         }
 
         private void BtnEmailingAttendeeWindow_Click(object sender, RoutedEventArgs e)
         {
             EmailingWindow window= new EmailingWindow();
+            window.eventIndex = eventIndex;
             window.Show();
         }
 
 
         private void EventWindow_Activated(object sender, EventArgs e)
         {
-            if (eventIndex != -1)
+            if (eventExists())
             {
                 TxtbxEventName.Text = Event.eventsList[eventIndex].name;
                 CmbBxEventLength.Text = Event.eventsList[eventIndex].duration.ToString(@"hh\:mm");
                 DtPkrEventRangeFrom.Text = Event.eventsList[eventIndex].eventRange.start.ToString();
                 DtPkrEventRangeTo.Text = Event.eventsList[eventIndex].eventRange.end.ToString();
                 List<Attendee> list = Event.eventsList[eventIndex].attendees;
+                TxtblkChosenTimeslot.Text = Event.eventsList[eventIndex].chosenTimeSlot.ToString();
                 if (list != null)
                 {
                     LstBxAttendeesList.Items.Clear();
@@ -76,11 +88,22 @@ namespace MeetingOrganizer
                 }
             }
         }
-
+        private bool eventExists()
+        {
+            return eventIndex != -1;
+        }
+        private bool timesExist()
+        {
+            return CmbBxEventLength.Text != "" && DtPkrEventRangeFrom.Text != "" && DtPkrEventRangeTo.Text != "";
+        }
+        private bool attendeeSelected()
+        {
+            return LstBxAttendeesList.SelectedIndex != -1;
+        }
         private void saveCreateEvent()
         {
-            
-            if (eventIndex == -1)
+
+            if (!eventExists())
             {
                 
                 Event.eventsList.Add(new Event());
@@ -98,10 +121,13 @@ namespace MeetingOrganizer
 
         private void BtnViewAttendee_Click(object sender, RoutedEventArgs e)
         {
-            AttendeeWindow window = new AttendeeWindow();
-            window.eventIndex = eventIndex;
-            window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
-            window.Show();
+            if (eventExists() && attendeeSelected())
+            {
+                AttendeeWindow window = new AttendeeWindow();
+                window.eventIndex = eventIndex;
+                window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
+                window.Show();
+            }
         }
 
 
@@ -113,10 +139,13 @@ namespace MeetingOrganizer
 
         private void BtnEditAttendee_Click(object sender, RoutedEventArgs e)
         {
-            AttendeeWindow window = new AttendeeWindow();
-            window.eventIndex = eventIndex;
-            window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
-            window.Show();
+            if (eventExists() && attendeeSelected())
+            {
+                AttendeeWindow window = new AttendeeWindow();
+                window.eventIndex = eventIndex;
+                window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
+                window.Show();
+            }
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

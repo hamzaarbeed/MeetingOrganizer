@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
+        Activated="EmailingWindow_Activated"
         Title="EmailingWindow" Height="600" Width="400"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
@@ -14,20 +15,15 @@
                 <TextBlock Margin="10" FontSize="16">
                     People who can attend
                 </TextBlock>
-                <ListBox Height="400" Margin="10" FontSize="16">
-                    <ListBoxItem>
-                        Johnson
-                    </ListBoxItem>
+                <ListBox x:Name="LstbxCanAttend" Height="400" Margin="10" FontSize="16">
+                    
                 </ListBox>
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <TextBlock Margin="10" FontSize="16">
                     People who can't attend
                 </TextBlock>
-                <ListBox Height="400" Margin="10" FontSize="16">
-                    <ListBoxItem>
-
-                    </ListBoxItem>
+                <ListBox x:Name="LstbxCantAttend" Height="400" Margin="10" FontSize="16">
                 </ListBox>
             </StackPanel>
         </StackPanel>
@@ -37,7 +33,7 @@
         <Button Margin="10" FontSize="16" x:Name="BtnSendEmails" Click="BtnSendEmails_Click">
             Send Emails
         </Button>
-        <Button Margin="10" FontSize="16">
+        <Button Margin="10" FontSize="16" x:Name="BtnCancel" Click="BtnCancel_Click">
             Cancel
         </Button>
     </StackPanel>
