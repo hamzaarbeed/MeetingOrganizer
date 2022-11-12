@@ -108,5 +108,94 @@ namespace MeetingOrganizer
             }
             return (canAttend.Except<int>(cantAttend).ToHashSet<int>(), cantAttend);//not sure about first element
         }
+
+        /// <summary>
+        /// Creates a list of time ranges as strings for each set of consecutive timeslots in bestTimeslots.
+        /// Assumptions: slot length is 15 minutes, bestTimeslots contains values and they are in ascending order by time
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> TimeslotsToRangeStrings()
+        {
+            //if there is nothing in bestTimeslots; What should we return?
+            if (bestTimeslots.Count == 0)
+            {
+                return null;
+            }
+
+
+            List<string> timeslotRanges = new List<string>();//what we return
+            DateTime start= bestTimeslots[0].dateAndTime;//holds start of the time range
+            DateTime end;//holds end of the time range
+            TimeSpan slotLength=TimeSpan.FromMinutes(15);
+            DateTime previousSlot = bestTimeslots[0].dateAndTime-slotLength;//holds the previous timeslot. Begins 15 minutes before the first slot
+
+            //check all best timeslots and add ranges as strings for consecutive times. Timeslots are assumed to be in order.
+            foreach(var slot in bestTimeslots)
+            {
+                if (!(previousSlot+slotLength==slot.dateAndTime))
+                {
+                    end=previousSlot;
+                    if (start==end)
+                        timeslotRanges.Add(start.ToString());
+                    else
+                        timeslotRanges.Add(start.ToString() + " - "+ end.ToString());
+                    start= slot.dateAndTime;
+                }
+                previousSlot = slot.dateAndTime;
+            }
+            
+            //add a string for the last item
+            end=previousSlot;
+            if (start==end)
+                timeslotRanges.Add(start.ToString());
+            else
+                timeslotRanges.Add(start.ToString() + " - "+ end.ToString());
+
+            return timeslotRanges;
+        }
+
+        /// <summary>
+        /// Converts a time range (as a string) to convert to a list of timeslots
+        /// Assumptions: string is in the format "DateTime - DateTime", Each timeslot is 15 minutes long
+        /// </summary>
+        /// <param name="rangeString">The string of the time range to convert to a list of timeslots</param>
+        /// <returns>List of timeslots (DateTime)</returns>
+        /// <exception cref="ArgumentException">throws exception if the string is in the wrong format</exception>
+        public static List<DateTime> RangeStringToTimeslots(string rangeString)
+        {
+
+            string[] timeInterval = rangeString.Split('-');//should contain [start] or [start, end]
+            if (timeInterval.Length == 0)
+            {
+                return new List<DateTime>();
+            }
+            if (!(timeInterval.Length == 1 || timeInterval.Length==2))
+            {
+                throw new ArgumentException();
+            }
+
+            TimeSpan slotLength = TimeSpan.FromMinutes(15);//there are 15 minutes in each slot
+            DateTime start = DateTime.Parse(timeInterval[0]);//beginning of time range
+            DateTime end;//contains end of time range
+            List<DateTime> timeslots = new List<DateTime>();//what we return
+
+            //if array is in the format [start, end], end  is the second value
+            if (timeInterval.Length==2)
+            {
+                end = DateTime.Parse(timeInterval[1]);
+            }
+            //if array is in the format [start], end is the first (only) value
+            else
+                end = DateTime.Parse(timeInterval[0]);
+
+            //add all timeslots in the range to the list
+            while (start<=end)
+            {
+                timeslots.Add(start);
+                start+=slotLength;
+            }
+
+            return timeslots;
+        }
     }
 }

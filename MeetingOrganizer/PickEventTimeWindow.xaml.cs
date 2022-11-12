@@ -26,9 +26,10 @@ namespace MeetingOrganizer
         }
         private void PickEventTimeWindow_Activated(object sender, EventArgs e)
         {
-            for (int i = 0; i < Timeslots.bestTimeslots.Count; i++)
+            List<string> timeslotRanges = Timeslots.TimeslotsToRangeStrings();
+            for (int i = 0; i < timeslotRanges.Count; i++)
             {
-                LstBxTimeslots.Items.Add(Timeslots.bestTimeslots[i].dateAndTime.ToString());
+                LstBxTimeslots.Items.Add(timeslotRanges[i]);
             }
         }
 
@@ -39,10 +40,22 @@ namespace MeetingOrganizer
 
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
-            if (eventIndex != -1 && LstBxTimeslots.SelectedIndex != -1)
+            if (eventIndex != -1 && CmbBxEventTimeSlot.SelectedIndex != -1)
             {
-                Event.eventsList[eventIndex].chosenTimeSlot = Timeslots.bestTimeslots[LstBxTimeslots.SelectedIndex].dateAndTime;
-                this.Close();
+                DateTime chosenTimeSlot;
+                if (DateTime.TryParse(CmbBxEventTimeSlot.SelectedItem.ToString(), out chosenTimeSlot))
+                {
+                    Event.eventsList[eventIndex].chosenTimeSlot = chosenTimeSlot;
+                    this.Close();
+                }
+            }
+        }
+        private void LstBxTimeslots_SelectedRangeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CmbBxEventTimeSlot.Items.Clear();
+            foreach (var slot in Timeslots.RangeStringToTimeslots(LstBxTimeslots.SelectedItem.ToString()))
+            {
+                CmbBxEventTimeSlot.Items.Add(slot);
             }
         }
     }
