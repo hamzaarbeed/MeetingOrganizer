@@ -36,7 +36,7 @@
             
         </ListBox>
         <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="Second: Pick Event Time Slot"></TextBlock>
-        <ComboBox x:Name="CmbBxEventTimeSlot" Margin="5" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+        <ComboBox x:Name="CmbBxEventTimeSlot" Margin="5" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" SelectionChanged="CmbBxTimeslots_SelectedRangeChanged">
 
         </ComboBox>
         

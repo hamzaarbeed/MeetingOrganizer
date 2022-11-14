@@ -19,6 +19,7 @@ namespace MeetingOrganizer
     /// </summary>
     public partial class PickEventTimeWindow : Window
     {
+        Dictionary<DateTime, HashSet<int>> _eventTimes = new Dictionary<DateTime, HashSet<int>>();
         public int eventIndex { get; set; }
         public PickEventTimeWindow()
         {
@@ -56,6 +57,27 @@ namespace MeetingOrganizer
             foreach (var slot in Timeslots.RangeStringToTimeslots(LstBxTimeslots.SelectedItem.ToString()))
             {
                 CmbBxEventTimeSlot.Items.Add(slot);
+            }
+        }
+
+        private void CmbBxTimeslots_SelectedRangeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (eventIndex != -1 && CmbBxEventTimeSlot.SelectedIndex != -1)//should we clear the list if no timeslot selected? (eg. if range changes)
+            {
+                DateTime chosenTimeSlot;
+                if (DateTime.TryParse(CmbBxEventTimeSlot.SelectedItem.ToString(), out chosenTimeSlot))//also initializes chosenTimeSlot
+                {
+                    //clear boxes and calculate who can and cannot attend
+                    LstBxCanAttend.Items.Clear();
+                    LstBxCantAttend.Items.Clear();
+                    (var canAttend, var cantAttend) = Timeslots.WhoCanAndCannotAttend(Event.eventsList[eventIndex].eventRange.start, chosenTimeSlot, Event.eventsList[eventIndex].attendees.Count);
+
+                    //add each attendee's name to the appropriate box
+                    foreach(var attendeeIndex in canAttend)
+                        LstBxCanAttend.Items.Add(Event.eventsList[eventIndex].attendees[attendeeIndex].name);
+                    foreach(var attendeeIndex in cantAttend)
+                        LstBxCantAttend.Items.Add(Event.eventsList[eventIndex].attendees[attendeeIndex].name);
+                }
             }
         }
     }
