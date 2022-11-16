@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MeetingOrganizer"
         mc:Ignorable="d"
         Activated="PickEventTimeWindow_Activated"
-        Title="Pick Event Time Window" Height="450" Width="550"
+        Title="Pick Event Time Window" Height="450" Width="650"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
@@ -14,13 +14,15 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -30,16 +32,25 @@
         <TextBlock Grid.Row="1" Grid.Column="2" Text="First: Pick Event Time Range">
 
         </TextBlock>
-        <ListBox x:Name="LstBxTimeslots"  Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" SelectionChanged="LstBxTimeslots_SelectedRangeChanged">
+        <ListBox x:Name="LstBxTimeslots"  Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="2" SelectionChanged="LstBxTimeslots_SelectedRangeChanged">
             
         </ListBox>
         <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="Second: Pick Event Time Slot"></TextBlock>
-        <ComboBox x:Name="CmbBxEventTimeSlot" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+        <ComboBox x:Name="CmbBxEventTimeSlot" Margin="5" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" SelectionChanged="CmbBxTimeslots_SelectedRangeChanged">
 
         </ComboBox>
-        <Button x:Name="BtnOk" Grid.Column="3" Grid.Row="4" FontSize="18" 
+        
+        <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Padding="5" Background="Silver" >People can attend list</TextBlock>
+        <ListBox Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" x:Name="LstBxCanAttend"></ListBox>
+
+        <TextBlock Grid.Row="3" Grid.Column="5" HorizontalAlignment="Center" Padding="5" Background="Silver">People can't attend list</TextBlock>
+        <ListBox  Grid.Row="4" Grid.Column="5" x:Name="LstBxCantAttend"></ListBox>
+        
+
+
+        <Button x:Name="BtnOk" Grid.Column="3" Grid.Row="5" FontSize="18" 
                 Margin="10" Click="BtnOk_Click">OK</Button>
-        <Button x:Name="BtnCancel" Grid.Column="4" Grid.Row="4" FontSize="18" 
+        <Button x:Name="BtnCancel" Grid.Column="4" Grid.Row="5" FontSize="18" 
                 Margin="10" Click="BtnCancel_Click">Cancel</Button>
     </Grid>
 </Window>

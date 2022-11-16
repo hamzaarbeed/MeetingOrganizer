@@ -106,7 +106,7 @@ namespace MeetingOrganizer
             {
                 canAttend.Add(i);
             }
-            return (canAttend.Except<int>(cantAttend).ToHashSet<int>(), cantAttend);//not sure about first element
+            return (canAttend.Except<int>(cantAttend).ToHashSet<int>(), cantAttend);
         }
 
         /// <summary>
