@@ -21,7 +21,6 @@ namespace MeetingOrganizer
 
     {
         public int attendeeIndex { get; set; }
-        public int eventIndex { get; set; }
         public Attendee attendee { get; set; }
 
         public AttendeeWindow()
@@ -35,17 +34,17 @@ namespace MeetingOrganizer
         {
             if (attendeeIndex != -1)
             {
-                attendee.name = Event.eventsList[eventIndex].attendees[attendeeIndex].name;
-                attendee.email = Event.eventsList[eventIndex].attendees[attendeeIndex].email;
+                attendee.name = Event.selectedEvent.attendees[attendeeIndex].name;
+                attendee.email = Event.selectedEvent.attendees[attendeeIndex].email;
 
                 //make a deep copy of availabilities, otherwise it will be linked to the original
-                foreach(var dtr in Event.eventsList[eventIndex].attendees[attendeeIndex].availabilities)
+                foreach(var dtr in Event.selectedEvent.attendees[attendeeIndex].availabilities)
                 {
                     attendee.availabilities.Add(dtr);
                 }
                 TxtBxAttendeeName.Text = attendee.name;
                 TxtBxAttendeeEmail.Text = attendee.email;
-                TxtBlockEventRange.Text = Event.eventsList[eventIndex].eventRange.ToString();
+                TxtBlockEventRange.Text = Event.selectedEvent.eventRange.ToString();
                 for (int i = 0; i < attendee.availabilities.Count; i++)
                 {
                     LstBxAvailabilityList.Items.Add(attendee.availabilities[i].ToString());
@@ -60,11 +59,11 @@ namespace MeetingOrganizer
                 attendee.email = TxtBxAttendeeEmail.Text;
                 if (attendeeIndex == -1)
                 {
-                    Event.eventsList[eventIndex].attendees.Add(attendee);
-                    attendeeIndex= Event.eventsList[eventIndex].attendees.Count-1;
+                    Event.selectedEvent.attendees.Add(attendee);
+                    attendeeIndex= Event.selectedEvent.attendees.Count-1;
                 }
                 else
-                    Event.eventsList[eventIndex].attendees[attendeeIndex]=attendee;
+                    Event.selectedEvent.attendees[attendeeIndex]=attendee;
                 this.Close();
             }
         }
