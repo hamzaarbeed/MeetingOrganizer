@@ -64,18 +64,21 @@ namespace MeetingOrganizer
         }
         private void BtnAddanAttendee_Click(object sender, RoutedEventArgs e)
         {
-            AttendeeWindow window = new AttendeeWindow();
-            window.Show();
+            if (isEventRangeAndDurationValid())
+            {
+                setEventRangeAndDuration();
+                AttendeeWindow window = new AttendeeWindow();
+                window.Show();
+            }
 
         }
 
 
         private void BtnPickEventTime_Click(object sender, RoutedEventArgs e)
         {
-            if (isEventRangeValid())
+            if (isEventRangeAndDurationValid())
             {
-                Event.selectedEvent.duration = TimeSpan.Parse(CmbBxEventLength.Text + ":00");
-                Event.selectedEvent.eventRange = new DateTimeRange(DateTime.Parse(DtPkrEventRangeFrom.Text), DateTime.Parse(DtPkrEventRangeTo.Text + " 23:59:59"));
+                setEventRangeAndDuration();
                 Timeslots.CalculateConflicts(Event.selectedEvent.eventRange, Event.selectedEvent.duration, Event.selectedEvent.attendees);
                 Timeslots.BestTimeslots(Event.selectedEvent.eventRange.start);
                 PickEventTimeWindow window = new PickEventTimeWindow();
@@ -108,7 +111,7 @@ namespace MeetingOrganizer
         {
             return eventIndex != -1;
         }
-        private bool isEventRangeValid()
+        private bool isEventRangeAndDurationValid()
         {
             return CmbBxEventLength.Text != "" && DtPkrEventRangeFrom.Text != "" && DtPkrEventRangeTo.Text != "";
         }
@@ -127,12 +130,17 @@ namespace MeetingOrganizer
             slotWithinRange = DateTime.TryParse(TxtblkChosenTimeslot.Text, out slotChosen) && slotWithinRange;
 
             slotWithinRange = slotWithinRange && (slotChosen>=from) && slotChosen<to;
-            return isEventRangeValid() && slotWithinRange;
+            return isEventRangeAndDurationValid() && slotWithinRange;
         }
         private bool allFieldsValid()
         {
             return (TxtbxEventName.Text!="" &&
                     isChosenTimeslotValid());//Do we need to add attendees to the conditions?
+        }
+        private void setEventRangeAndDuration()
+        {
+            Event.selectedEvent.duration = TimeSpan.Parse(CmbBxEventLength.Text + ":00");
+            Event.selectedEvent.eventRange = new DateTimeRange(DateTime.Parse(DtPkrEventRangeFrom.Text), DateTime.Parse(DtPkrEventRangeTo.Text + " 23:59:59"));
         }
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
@@ -154,8 +162,9 @@ namespace MeetingOrganizer
 
         private void BtnViewAttendee_Click(object sender, RoutedEventArgs e)
         {
-            if (attendeeSelected())
+            if (attendeeSelected() && isEventRangeAndDurationValid())
             {
+                setEventRangeAndDuration();
                 AttendeeWindow window = new AttendeeWindow();
                 window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
                 window.Show();
@@ -171,8 +180,9 @@ namespace MeetingOrganizer
 
         private void BtnEditAttendee_Click(object sender, RoutedEventArgs e)
         {
-            if (attendeeSelected())
+            if (attendeeSelected() && isEventRangeAndDurationValid())
             {
+                setEventRangeAndDuration();
                 AttendeeWindow window = new AttendeeWindow();
                 window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
                 window.Show();

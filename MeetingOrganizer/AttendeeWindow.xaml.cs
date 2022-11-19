@@ -32,6 +32,7 @@ namespace MeetingOrganizer
 
         private void AttendeeWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            TxtBlockEventRange.Text = Event.selectedEvent.eventRange.ToString();
             if (attendeeIndex != -1)
             {
                 attendee.name = Event.selectedEvent.attendees[attendeeIndex].name;
@@ -44,7 +45,6 @@ namespace MeetingOrganizer
                 }
                 TxtBxAttendeeName.Text = attendee.name;
                 TxtBxAttendeeEmail.Text = attendee.email;
-                TxtBlockEventRange.Text = Event.selectedEvent.eventRange.ToString();
                 for (int i = 0; i < attendee.availabilities.Count; i++)
                 {
                     LstBxAvailabilityList.Items.Add(attendee.availabilities[i].ToString());
