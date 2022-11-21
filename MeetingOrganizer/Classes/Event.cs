@@ -32,16 +32,15 @@ namespace MeetingOrganizer
         }
 
 
-        public static Event DeepCopy(Event otherEvent){
+        public Event DeepCopy(){
             Event eventCopy = new Event();
-            eventCopy.duration = otherEvent.duration;
-            DateTimeRange dtr = new DateTimeRange(otherEvent.eventRange.start, otherEvent.eventRange.end);
-            eventCopy.eventRange = dtr;
-            eventCopy.name = otherEvent.name;
-            eventCopy.chosenTimeSlot = otherEvent.chosenTimeSlot;
-            foreach (var attendee in otherEvent.attendees)
+            eventCopy.duration = duration;
+            eventCopy.eventRange = eventRange.DeepCopy();
+            eventCopy.name = name;
+            eventCopy.chosenTimeSlot = chosenTimeSlot;
+            foreach (var attendee in attendees)
             {
-                eventCopy.attendees.Add(attendee.deepCopy());
+                eventCopy.attendees.Add(attendee.DeepCopy());
             }
             return eventCopy;
         }
@@ -62,15 +61,5 @@ namespace MeetingOrganizer
             File.WriteAllText("Data.dat", jsonString);
             
         }
-
-        //create timeslots
-        /*void MakeTimeslots()
-        {
-            timeslots = new Timeslots(availableTimeRange, duration, attendees);
-        }
-        */
-
-        //public void AddAttendee(Attendee) { }
-        //public void DeleteAttendee(Attendee) { }
     }
 }

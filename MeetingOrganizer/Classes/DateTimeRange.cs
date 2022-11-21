@@ -22,7 +22,7 @@ namespace MeetingOrganizer
             return start.ToString("MM/dd/yyyy HH:mm") + " - " + end.ToString("MM/dd/yyyy HH:mm");
         } 
 
-        public DateTimeRange deepCopy()
+        public DateTimeRange DeepCopy()
         {
             DateTimeRange newDateTimeRange = new DateTimeRange(start, end);
             return newDateTimeRange;

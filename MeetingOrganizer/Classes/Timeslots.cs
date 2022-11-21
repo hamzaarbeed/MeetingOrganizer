@@ -10,7 +10,7 @@ namespace MeetingOrganizer
     internal class Timeslots
     {
         public static List<HashSet<int>> slotConflictsList { get; private set; }
-        public static List<(DateTime dateAndTime, HashSet<int> indexAbsent)> bestTimeslots { get; private set; }
+        public static List<DateTime> bestTimeslots { get; private set; }
 
         /// <summary>
         /// Constructor that creates a list of attendee time conflicts for a Timeslots object. 
@@ -54,16 +54,15 @@ namespace MeetingOrganizer
 
         }
         /// <summary>
-        /// Returns a list of timeslots with the least conflicts along with the attendees' Guid that can't attend
+        /// Returns a list of timeslots with the least conflicts
         /// </summary>
-        /// <returns>list of pairs containing timeslot (as DateTime) and attendee indices (HashSet<int>) who can't make it</returns>
-        public static List<(DateTime dateAndTime, HashSet<int> indexAbsent)> BestTimeslots(DateTime start)
+        /// <returns>list containing timeslot (as DateTime)</returns>
+        public static List<DateTime> BestTimeslots(DateTime start)
         {
             TimeSpan slotLength = TimeSpan.FromMinutes(15);
             int numConflicts = int.MaxValue;//stores the minimum number of conflicts found so far when iterating; make this as high as possible so almost everything is lower
             DateTime slot;//store the time of the slot
             HashSet<int> attendeesUnableToAttend;//store the attendees that can't attend
-            //List<(DateTime dateAndTime, HashSet<int> indexAbsent)> bestTimeslots = new();//what we will return
 
             //go through conflicts, keep track of minimum conflicts and a list that has that number of conflicts, reset list if a lower # conflicts encountered
             for (int slotIndex = 0; slotIndex < slotConflictsList.Count; slotIndex++)//iterate timeslots
@@ -71,15 +70,14 @@ namespace MeetingOrganizer
                 if (slotConflictsList[slotIndex].Count<numConflicts)
                 {
                     numConflicts=slotConflictsList[slotIndex].Count;
-                    bestTimeslots=new();
+                    bestTimeslots=new List<DateTime>();
                 }
                 //if the number of conflicts in the timeslot is lower than the current number of conflicts,
                 //add that timeslot to the result
                 if (slotConflictsList[slotIndex].Count==numConflicts)
                 {
                     slot=start+(slotIndex*slotLength);
-                    attendeesUnableToAttend=slotConflictsList[slotIndex];
-                    bestTimeslots.Add((slot, attendeesUnableToAttend));
+                    bestTimeslots.Add(slot);
 
                 }
             }
@@ -124,24 +122,24 @@ namespace MeetingOrganizer
 
 
             List<string> timeslotRanges = new List<string>();//what we return
-            DateTime start= bestTimeslots[0].dateAndTime;//holds start of the time range
+            DateTime start= bestTimeslots[0];//holds start of the time range
             DateTime end;//holds end of the time range
             TimeSpan slotLength=TimeSpan.FromMinutes(15);
-            DateTime previousSlot = bestTimeslots[0].dateAndTime-slotLength;//holds the previous timeslot. Begins 15 minutes before the first slot
+            DateTime previousSlot = bestTimeslots[0]-slotLength;//holds the previous timeslot. Begins 15 minutes before the first slot
 
             //check all best timeslots and add ranges as strings for consecutive times. Timeslots are assumed to be in order.
             foreach(var slot in bestTimeslots)
             {
-                if (!(previousSlot+slotLength==slot.dateAndTime))
+                if (!(previousSlot+slotLength==slot))
                 {
                     end=previousSlot;
                     if (start==end)
                         timeslotRanges.Add(start.ToString());
                     else
                         timeslotRanges.Add(start.ToString() + " - "+ end.ToString());
-                    start= slot.dateAndTime;
+                    start= slot;
                 }
-                previousSlot = slot.dateAndTime;
+                previousSlot = slot;
             }
             
             //add a string for the last item

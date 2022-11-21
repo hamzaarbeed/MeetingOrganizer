@@ -15,12 +15,12 @@ namespace MeetingOrganizer
         public List<DateTimeRange> availabilities { get; set; }//time ranges that this attendee is available in
         public string email { get; set; }//email of this attendee
 
-        public Attendee deepCopy(){
+        public Attendee DeepCopy(){
             Attendee newAttendee = new Attendee();
             newAttendee.name = name;
             newAttendee.email = email;
             foreach (DateTimeRange range in availabilities) {
-                newAttendee.availabilities.Add(range.deepCopy());
+                newAttendee.availabilities.Add(range.DeepCopy());
             }
             return newAttendee;
         }
