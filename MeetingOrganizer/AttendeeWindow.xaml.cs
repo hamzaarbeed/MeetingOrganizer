@@ -21,64 +21,84 @@ namespace MeetingOrganizer
 
     {
         public int attendeeIndex { get; set; }
-        public int eventIndex { get; set; }
+        public Attendee attendee { get; set; }
 
         public AttendeeWindow()
         {
             attendeeIndex = -1;
+            attendee = new Attendee();
             InitializeComponent();
         }
 
         private void AttendeeWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            TxtBlockEventRange.Text = Event.selectedEvent.eventRange.ToString();
             if (attendeeIndex != -1)
             {
-                Attendee attendee = Event.eventsList[eventIndex].attendees[attendeeIndex];
+                attendee.name = Event.selectedEvent.attendees[attendeeIndex].name;
+                attendee.email = Event.selectedEvent.attendees[attendeeIndex].email;
+
+                //make a deep copy of availabilities, otherwise it will be linked to the original
+                foreach(var dtr in Event.selectedEvent.attendees[attendeeIndex].availabilities)
+                {
+                    attendee.availabilities.Add(dtr);
+                }
                 TxtBxAttendeeName.Text = attendee.name;
                 TxtBxAttendeeEmail.Text = attendee.email;
-                TxtBlockEventRange.Text = Event.eventsList[eventIndex].eventRange.ToString();
                 for (int i = 0; i < attendee.availabilities.Count; i++)
                 {
                     LstBxAvailabilityList.Items.Add(attendee.availabilities[i].ToString());
                 }
             }
         }
-
-
-        private void saveCreateAttendee(){
-
-            
-            
-            if (attendeeIndex == -1)
-            {
-                Attendee temp = new Attendee();
-                temp.name = TxtBxAttendeeName.Text;
-                temp.email = TxtBxAttendeeEmail.Text;
-                Event.eventsList[eventIndex].attendees.Add(temp);
-                attendeeIndex= Event.eventsList[eventIndex].attendees.Count-1;
-            }
-            else
-            {
-                Event.eventsList[eventIndex].attendees[attendeeIndex].name = TxtBxAttendeeName.Text;
-                Event.eventsList[eventIndex].attendees[attendeeIndex].email = TxtBxAttendeeEmail.Text;
-            }
-            
-
-        }
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
-            saveCreateAttendee();
-            this.Close();
+            if (allFieldsValid())
+            {
+                attendee.name = TxtBxAttendeeName.Text;
+                attendee.email = TxtBxAttendeeEmail.Text;
+                if (attendeeIndex == -1)
+                {
+                    Event.selectedEvent.attendees.Add(attendee);
+                    attendeeIndex= Event.selectedEvent.attendees.Count-1;
+                }
+                else
+                    Event.selectedEvent.attendees[attendeeIndex]=attendee;
+                this.Close();
+            }
         }
-
+        private bool isValidName()
+        {
+            return TxtBxAttendeeName.Text!="";
+        }
+        private bool isValidEmail()
+        {
+            return TxtBxAttendeeEmail.Text!="";
+        }
+        private bool isValidRange()
+        {
+            return (DtPkrAvailabilityFrom.Text!="" &&
+                    CmbBxAvailabilityFrom.Text!="" &&
+                    DtPkrAvailabilityTo.Text!="" &&
+                    CmbBxAvailabilityTo.Text!="");
+        }
+        private bool allFieldsValid()
+        {
+            return  isValidName() && isValidEmail();
+        }
+        private bool isValidAttendee()
+        {
+            return attendee.name!="" && attendee.email!="";//is 0 availabilities ok?
+        }
         private void BtnAddAvailability_Click(object sender, RoutedEventArgs e)
         {
-            saveCreateAttendee();
-
-            DateTimeRange dateTimeRange = new DateTimeRange(DateTime.Parse(DtPkrAvailabilityFrom.Text + " " + CmbBxAvailabilityFrom.Text + ":00")
-                , DateTime.Parse(DtPkrAvailabilityTo.Text + " " + CmbBxAvailabilityTo.Text + ":00"));
-            LstBxAvailabilityList.Items.Add(dateTimeRange);
-            Event.eventsList[eventIndex].attendees[attendeeIndex].availabilities.Add(dateTimeRange);
+            if (isValidRange())
+            {
+                DateTimeRange dateTimeRange = new DateTimeRange(DateTime.Parse(DtPkrAvailabilityFrom.Text + " " + CmbBxAvailabilityFrom.Text + ":00")
+                    , DateTime.Parse(DtPkrAvailabilityTo.Text + " " + CmbBxAvailabilityTo.Text + ":00"));
+                attendee.availabilities.Add(dateTimeRange);
+                LstBxAvailabilityList.Items.Add(dateTimeRange);
+            }
 
         }
 
@@ -95,7 +115,7 @@ namespace MeetingOrganizer
 
         private void BtnRemoveAvailability_Click(object sender, RoutedEventArgs e)
         {
-            Event.eventsList[eventIndex].attendees[attendeeIndex].availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
+            attendee.availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
             LstBxAvailabilityList.Items.RemoveAt(LstBxAvailabilityList.SelectedIndex);
         }
 
