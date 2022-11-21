@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Collections.Specialized;
 
 namespace MeetingOrganizer
 {
@@ -49,14 +53,40 @@ namespace MeetingOrganizer
                 //This block lists the attendees by name. It might be difficult to extract the emails the way this is implemented currently.
                 (whoCanAttend, whoCantAttend) = Timeslots.WhoCanAndCannotAttend(eventRange.start, chosenTimeslot, attendees.Count);
                 foreach (int canAttendIndex in whoCanAttend)
-                    LstbxCanAttend.Items.Add(Event.eventsList[eventIndex].attendees[canAttendIndex].name);
+                    LstbxCanAttend.Items.Add(new ListBoxItem() { Content = Event.eventsList[eventIndex].attendees[canAttendIndex].name,Tag = canAttendIndex });
                 foreach (int cantAttendIndex in whoCantAttend)
-                    LstbxCantAttend.Items.Add(Event.eventsList[eventIndex].attendees[cantAttendIndex].name);
+                    LstbxCantAttend.Items.Add(new ListBoxItem() { Content = Event.eventsList[eventIndex].attendees[cantAttendIndex].name, Tag = cantAttendIndex });
             }
         }
 
         private void BtnSendEmails_Click(object sender, RoutedEventArgs e)
         {
+            string appEmail = "meetingorganizercodesage@outlook.com";
+            var smtpClient = new SmtpClient("smtp-mail.outlook.com")
+            {
+                
+                Port = 587,
+                Credentials = new NetworkCredential(appEmail, PswrdBx.Password.ToString()),
+                EnableSsl = true,
+            };
+            foreach (ListBoxItem item in LstbxCanAttend.Items)
+            {
+                Attendee attendee = Event.eventsList[eventIndex].attendees[(int)item.Tag];
+                Event eventt = Event.eventsList [eventIndex];
+
+                smtpClient.Send(appEmail, attendee.email, "Invite to Scheduled Event: " + Event.eventsList[eventIndex].name, "Hello " + attendee.name + ",\n" +
+                "You are invited to attend " + eventt.name + " scheduled at " + eventt.chosenTimeSlot + ".\n Thank you");
+            }
+            foreach (ListBoxItem item in LstbxCantAttend.Items)
+            {
+                Attendee attendee = Event.eventsList[eventIndex].attendees[(int)item.Tag];
+                Event eventt = Event.eventsList[eventIndex];
+
+                smtpClient.Send(appEmail, attendee.email, "Scheduled Event: " + Event.eventsList[eventIndex].name, "Hello " + attendee.name + ",\n\n" +
+                "We are sorry to let you know that you can't attend " + eventt.name + " scheduled at " + eventt.chosenTimeSlot + " because of your availabilities." +
+                "\n\nThank you");
+            }
+
             MessageBox.Show("Emails are sent");
 
         }

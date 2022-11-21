@@ -30,6 +30,8 @@
         <StackPanel Orientation="Horizontal">
 
         </StackPanel>
+        <TextBlock>Enter Application Email Password</TextBlock>
+        <PasswordBox x:Name="PswrdBx"></PasswordBox>
         <Button Margin="10" FontSize="16" x:Name="BtnSendEmails" Click="BtnSendEmails_Click">
             Send Emails
         </Button>
