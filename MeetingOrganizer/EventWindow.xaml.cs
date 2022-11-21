@@ -77,7 +77,8 @@ namespace MeetingOrganizer
                 DtPkrEventRangeFrom.Text = Event.eventsList[eventIndex].eventRange.start.ToString();
                 DtPkrEventRangeTo.Text = Event.eventsList[eventIndex].eventRange.end.ToString();
                 List<Attendee> list = Event.eventsList[eventIndex].attendees;
-                TxtblkChosenTimeslot.Text = Event.eventsList[eventIndex].chosenTimeSlot.ToString();
+                if (Event.eventsList[eventIndex].chosenTimeSlot > new DateTime())
+                    TxtblkChosenTimeslot.Text = Event.eventsList[eventIndex].chosenTimeSlot.ToString();
                 if (list != null)
                 {
                     LstBxAttendeesList.Items.Clear();
