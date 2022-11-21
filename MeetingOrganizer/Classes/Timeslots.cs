@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MeetingOrganizer
 {
     //call CalculateConflicts() and BestTimeslots() and the lists will be stored in the static variables
-    public class Timeslots
+    internal class Timeslots
     {
         public static List<HashSet<int>> slotConflictsList { get; private set; }
         public static List<(DateTime dateAndTime, HashSet<int> indexAbsent)> bestTimeslots { get; private set; }
