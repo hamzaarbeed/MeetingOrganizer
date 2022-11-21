@@ -12,11 +12,13 @@ using System.Text.Json.Serialization;
 namespace MeetingOrganizer
 {
 
-    public class Event
+    internal class Event
     {
         public static List<Event> eventsList = new List<Event>();
+
         public static Event selectedEvent;
         public static Attendee selectedAttendee;
+
 
         public TimeSpan duration { get; set; }//length of the event itself
 
@@ -28,6 +30,7 @@ namespace MeetingOrganizer
         {
             attendees = new List<Attendee>();
         }
+
 
         public static Event DeepCopy(Event otherEvent){
             Event eventCopy = new Event();
@@ -42,6 +45,7 @@ namespace MeetingOrganizer
             }
             return eventCopy;
         }
+
 
         public static void loadFromFile()
         {
