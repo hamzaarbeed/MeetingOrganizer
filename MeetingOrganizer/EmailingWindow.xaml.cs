@@ -19,6 +19,7 @@ namespace MeetingOrganizer
     /// </summary>
     public partial class EmailingWindow : Window
     {
+        public int eventIndex { get; set; }
         public HashSet<int> whoCanAttend { get; set; }//made this a field for emailing in the future
         public HashSet<int> whoCantAttend { get; set; }
 
@@ -29,28 +30,28 @@ namespace MeetingOrganizer
 
         private void EmailingWindow_Activated(object sender, EventArgs e)
         {
-            if (true)
+            if (eventIndex != -1)
             {
                 whoCanAttend = new HashSet<int>();
                 whoCantAttend = new HashSet<int>();
                 LstbxCanAttend.Items.Clear();
                 LstbxCantAttend.Items.Clear();
 
-                DateTimeRange eventRange = Event.selectedEvent.eventRange;
-                TimeSpan duration = Event.selectedEvent.duration;
-                DateTime chosenTimeslot = Event.selectedEvent.chosenTimeSlot;
-                List<Attendee> attendees = Event.selectedEvent.attendees;
+                DateTimeRange eventRange = Event.eventsList[eventIndex].eventRange;
+                TimeSpan duration = Event.eventsList[eventIndex].duration;
+                DateTime chosenTimeslot = Event.eventsList[eventIndex].chosenTimeSlot;
+                List<Attendee> attendees = Event.eventsList[eventIndex].attendees;
 
                 //need to remake the conflicts list in case the Timeslots variable was cleared/changed
                 //*Possible Issue* There could be discrepancies in the list between making the timeslot and opening the EmailingWindow (if there were changes in some Event fields)
-                Timeslots.CalculateConflicts(eventRange, duration, Event.selectedEvent.attendees);
+                Timeslots.CalculateConflicts(eventRange, duration, Event.eventsList[eventIndex].attendees);
 
                 //This block lists the attendees by name. It might be difficult to extract the emails the way this is implemented currently.
                 (whoCanAttend, whoCantAttend) = Timeslots.WhoCanAndCannotAttend(eventRange.start, chosenTimeslot, attendees.Count);
                 foreach (int canAttendIndex in whoCanAttend)
-                    LstbxCanAttend.Items.Add(Event.selectedEvent.attendees[canAttendIndex].name);
+                    LstbxCanAttend.Items.Add(Event.eventsList[eventIndex].attendees[canAttendIndex].name);
                 foreach (int cantAttendIndex in whoCantAttend)
-                    LstbxCantAttend.Items.Add(Event.selectedEvent.attendees[cantAttendIndex].name);
+                    LstbxCantAttend.Items.Add(Event.eventsList[eventIndex].attendees[cantAttendIndex].name);
             }
         }
 
