@@ -8,8 +8,8 @@ namespace MeetingOrganizer
 {
     public class DateTimeRange
     {
-        public DateTime start { get; private set; }
-        public DateTime end { get; private set; }
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
         public DateTimeRange(DateTime start, DateTime end)
         {
             this.start = start;
@@ -21,6 +21,12 @@ namespace MeetingOrganizer
         {
             return start.ToString("MM/dd/yyyy HH:mm") + " - " + end.ToString("MM/dd/yyyy HH:mm");
         } 
+
+        public DateTimeRange deepCopy()
+        {
+            DateTimeRange newDateTimeRange = new DateTimeRange(start, end);
+            return newDateTimeRange;
+        }
         /// <summary>
         /// Checks if this DateTimeRange overlaps with another DateTimeRange. 
         /// Overlap means that the ranges intersect (contain the same DateTime) at some point (including endpoints)

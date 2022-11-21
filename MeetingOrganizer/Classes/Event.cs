@@ -16,7 +16,7 @@ namespace MeetingOrganizer
     {
         public static List<Event> eventsList = new List<Event>();
         public static Event selectedEvent;
-
+        public static Attendee selectedAttendee;
 
         public TimeSpan duration { get; set; }//length of the event itself
 
@@ -38,7 +38,7 @@ namespace MeetingOrganizer
             eventCopy.chosenTimeSlot = otherEvent.chosenTimeSlot;
             foreach (var attendee in otherEvent.attendees)
             {
-                eventCopy.attendees.Add(attendee);
+                eventCopy.attendees.Add(attendee.deepCopy());
             }
             return eventCopy;
         }
