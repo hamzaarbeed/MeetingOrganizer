@@ -29,8 +29,15 @@ namespace MeetingOrganizer
             
         }
 
+        private bool isAllFieldsFilled()
+        {
+            return (TxtbxEventName.Text != "" && CmbBxEventLength.Text != "" && DtPkrEventRangeFrom.Text != "" && DtPkrEventRangeTo.Text != "");
+        }
         private void BtnAddanAttendee_Click(object sender, RoutedEventArgs e)
         {
+            if (isAllFieldsFilled() == false)
+                return;
+
             saveBasicEventInfo();
 
             AttendeeWindow window = new AttendeeWindow();
@@ -43,6 +50,9 @@ namespace MeetingOrganizer
 
         private void BtnPickEventTime_Click(object sender, RoutedEventArgs e)
         {
+            if (isAllFieldsFilled() == false)
+                return;
+
             Timeslots.CalculateConflicts(tempEvent.eventRange, tempEvent.duration, tempEvent.attendees);
             Timeslots.BestTimeslots(tempEvent.eventRange.start);
             PickEventTimeWindow window = new PickEventTimeWindow();
@@ -63,34 +73,36 @@ namespace MeetingOrganizer
         //-----------------------------------------------------------------------------------------------------------------
         private void BtnEmailingAttendeeWindow_Click(object sender, RoutedEventArgs e)
         {
-            ///needs work
-            EmailingWindow window= new EmailingWindow();
-            window.tempEvent = tempEvent;
-            window.Show();
+            if (tempEvent.chosenTimeSlot != new DateTime())
+            {
+                EmailingWindow window = new EmailingWindow();
+                window.tempEvent = tempEvent;
+                window.Show();
+            }
         }
 
 
         private void EventWindow_Activated(object sender, EventArgs e)
         {
-            if (tempEvent.attendees.Count>0)
-            {
-                TxtbxEventName.Text = tempEvent.name;
-                CmbBxEventLength.Text = tempEvent.duration.ToString(@"hh\:mm");
+            TxtbxEventName.Text = tempEvent.name;
+            CmbBxEventLength.Text = tempEvent.duration.ToString(@"hh\:mm");
+            if (tempEvent.eventRange != null) { 
                 DtPkrEventRangeFrom.Text = tempEvent.eventRange.start.ToString();
                 DtPkrEventRangeTo.Text = tempEvent.eventRange.end.ToString();
-                List<Attendee> list = tempEvent.attendees;
-                if (tempEvent.chosenTimeSlot > new DateTime())
-                    TxtblkChosenTimeslot.Text = tempEvent.chosenTimeSlot.ToString();
-                if (list != null)
+            }
+            List<Attendee> list = tempEvent.attendees;
+            if (tempEvent.chosenTimeSlot > new DateTime())
+                TxtblkChosenTimeslot.Text = tempEvent.chosenTimeSlot.ToString();
+            if (list != null)
+            {
+                LstBxAttendeesList.Items.Clear();
+                for (int i = 0; i < list.Count; i++)
                 {
-                    LstBxAttendeesList.Items.Clear();
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        LstBxAttendeesList.Items.Add(list[i].name);
-                    }
+                    LstBxAttendeesList.Items.Add(list[i].name);
                 }
             }
         }
+
         private bool eventExists()
         {
             return eventIndex != -1;

@@ -59,8 +59,13 @@ namespace MeetingOrganizer
             }
         }
 
+        private bool isAllFieldFilled() {
+            return (TxtBxAttendeeName.Text != "" && TxtBxAttendeeEmail.Text != "");
+        }
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
+            if (isAllFieldFilled() == false)
+                return;
             saveCreateEvent();
             this.Close();
         }
@@ -90,8 +95,11 @@ namespace MeetingOrganizer
 
         private void BtnRemoveAvailability_Click(object sender, RoutedEventArgs e)
         {
-            tempAttendee.availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
-            LstBxAvailabilityList.Items.RemoveAt(LstBxAvailabilityList.SelectedIndex);
+            if (LstBxAvailabilityList.SelectedIndex != -1)
+            {
+                tempAttendee.availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
+                LstBxAvailabilityList.Items.RemoveAt(LstBxAvailabilityList.SelectedIndex);
+            }
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

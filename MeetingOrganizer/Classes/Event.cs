@@ -16,10 +16,6 @@ namespace MeetingOrganizer
     {
         public static List<Event> eventsList = new List<Event>();
 
-        public static Event selectedEvent;
-        public static Attendee selectedAttendee;
-
-
         public TimeSpan duration { get; set; }//length of the event itself
 
         public DateTimeRange eventRange { get; set; }//time range that the event can occur
@@ -28,6 +24,7 @@ namespace MeetingOrganizer
         public List<Attendee> attendees { get; set; }//list of attendees
         public Event()
         {
+
             attendees = new List<Attendee>();
         }
 
