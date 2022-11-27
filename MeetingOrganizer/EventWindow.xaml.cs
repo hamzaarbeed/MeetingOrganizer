@@ -73,6 +73,7 @@ namespace MeetingOrganizer
         //-----------------------------------------------------------------------------------------------------------------
         private void BtnEmailingAttendeeWindow_Click(object sender, RoutedEventArgs e)
         {
+            //open window if we have chosen a timeslot already
             if (tempEvent.chosenTimeSlot != new DateTime())
             {
                 EmailingWindow window = new EmailingWindow();
@@ -137,7 +138,7 @@ namespace MeetingOrganizer
 
         private void BtnViewAttendee_Click(object sender, RoutedEventArgs e)
         {
-            if (eventExists() && attendeeSelected())
+            if (attendeeSelected())
             {
                 AttendeeWindow window = new AttendeeWindow();
                 window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
@@ -156,7 +157,7 @@ namespace MeetingOrganizer
 
         private void BtnEditAttendee_Click(object sender, RoutedEventArgs e)
         {
-            if (eventExists() && attendeeSelected())
+            if (attendeeSelected())
             {
                 AttendeeWindow window = new AttendeeWindow();
                 window.attendeeIndex = LstBxAttendeesList.SelectedIndex;
