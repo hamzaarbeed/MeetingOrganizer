@@ -35,6 +35,8 @@ namespace MeetingOrganizer
         private void BtnAddEvent_Click(object sender, RoutedEventArgs e)
         {
             EventWindow window = new EventWindow();
+            window.eventIndex = -1;
+            window.tempEvent = new Event();
             window.Show();
         }
 
@@ -59,8 +61,8 @@ namespace MeetingOrganizer
             if (LstBxEventsList.SelectedIndex != -1) {
                 EventWindow window = new EventWindow();
                 window.eventIndex = LstBxEventsList.SelectedIndex;
+                window.tempEvent = Event.eventsList[window.eventIndex].DeepCopy();
                 window.Show();
-                //add lines to avoid changes
 
             }
         }
@@ -71,8 +73,8 @@ namespace MeetingOrganizer
             {
                 EventWindow window = new EventWindow();
                 window.eventIndex = LstBxEventsList.SelectedIndex;
+                window.tempEvent = Event.eventsList[window.eventIndex].DeepCopy();
                 window.Show();
-
 
             }
         }

@@ -21,11 +21,11 @@ namespace MeetingOrganizer
 
     {
         public int attendeeIndex { get; set; }
-        public int eventIndex { get; set; }
+        public Attendee tempAttendee;
+        public Event tempEvent;
 
         public AttendeeWindow()
         {
-            attendeeIndex = -1;
             InitializeComponent();
         }
 
@@ -33,52 +33,47 @@ namespace MeetingOrganizer
         {
             if (attendeeIndex != -1)
             {
-                Attendee attendee = Event.eventsList[eventIndex].attendees[attendeeIndex];
-                TxtBxAttendeeName.Text = attendee.name;
-                TxtBxAttendeeEmail.Text = attendee.email;
-                TxtBlockEventRange.Text = Event.eventsList[eventIndex].eventRange.ToString();
-                for (int i = 0; i < attendee.availabilities.Count; i++)
+                TxtBxAttendeeName.Text = tempAttendee.name;
+                TxtBxAttendeeEmail.Text = tempAttendee.email;
+                for (int i = 0; i < tempAttendee.availabilities.Count; i++)
                 {
-                    LstBxAvailabilityList.Items.Add(attendee.availabilities[i].ToString());
+                    LstBxAvailabilityList.Items.Add(tempAttendee.availabilities[i].ToString());
                 }
             }
+
+            TxtBlockEventRange.Text = tempEvent.eventRange.ToString();
         }
 
 
-        private void saveCreateAttendee(){
-
-            
-            
+        private void saveCreateEvent()
+        {
+            tempAttendee.name = TxtBxAttendeeName.Text;
+            tempAttendee.email = TxtBxAttendeeEmail.Text;
             if (attendeeIndex == -1)
             {
-                Attendee temp = new Attendee();
-                temp.name = TxtBxAttendeeName.Text;
-                temp.email = TxtBxAttendeeEmail.Text;
-                Event.eventsList[eventIndex].attendees.Add(temp);
-                attendeeIndex= Event.eventsList[eventIndex].attendees.Count-1;
+                tempEvent.attendees.Add(tempAttendee);
             }
             else
             {
-                Event.eventsList[eventIndex].attendees[attendeeIndex].name = TxtBxAttendeeName.Text;
-                Event.eventsList[eventIndex].attendees[attendeeIndex].email = TxtBxAttendeeEmail.Text;
+                tempEvent.attendees[attendeeIndex] = tempAttendee;
             }
-            
-
         }
+
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
-            saveCreateAttendee();
+            saveCreateEvent();
             this.Close();
         }
 
         private void BtnAddAvailability_Click(object sender, RoutedEventArgs e)
         {
-            saveCreateAttendee();
 
             DateTimeRange dateTimeRange = new DateTimeRange(DateTime.Parse(DtPkrAvailabilityFrom.Text + " " + CmbBxAvailabilityFrom.Text + ":00")
                 , DateTime.Parse(DtPkrAvailabilityTo.Text + " " + CmbBxAvailabilityTo.Text + ":00"));
+
             LstBxAvailabilityList.Items.Add(dateTimeRange);
-            Event.eventsList[eventIndex].attendees[attendeeIndex].availabilities.Add(dateTimeRange);
+
+            tempAttendee.availabilities.Add(dateTimeRange);
 
         }
 
@@ -95,7 +90,7 @@ namespace MeetingOrganizer
 
         private void BtnRemoveAvailability_Click(object sender, RoutedEventArgs e)
         {
-            Event.eventsList[eventIndex].attendees[attendeeIndex].availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
+            tempAttendee.availabilities.RemoveAt(LstBxAvailabilityList.SelectedIndex);
             LstBxAvailabilityList.Items.RemoveAt(LstBxAvailabilityList.SelectedIndex);
         }
 

@@ -12,7 +12,7 @@ using System.Text.Json.Serialization;
 namespace MeetingOrganizer
 {
 
-    internal class Event
+    public class Event
     {
         public static List<Event> eventsList = new List<Event>();
 

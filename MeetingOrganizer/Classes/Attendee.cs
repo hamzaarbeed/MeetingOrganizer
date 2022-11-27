@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MeetingOrganizer
 {
-    internal class Attendee
+    public class Attendee
     {
         public Attendee() {
             availabilities = new List<DateTimeRange>();

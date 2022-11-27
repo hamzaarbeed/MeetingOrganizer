@@ -23,7 +23,7 @@ namespace MeetingOrganizer
     /// </summary>
     public partial class EmailingWindow : Window
     {
-        public int eventIndex { get; set; }
+        public Event tempEvent;
         public HashSet<int> whoCanAttend { get; set; }//made this a field for emailing in the future
         public HashSet<int> whoCantAttend { get; set; }
 
@@ -34,29 +34,27 @@ namespace MeetingOrganizer
 
         private void EmailingWindow_Activated(object sender, EventArgs e)
         {
-            if (eventIndex != -1)
-            {
-                whoCanAttend = new HashSet<int>();
-                whoCantAttend = new HashSet<int>();
-                LstbxCanAttend.Items.Clear();
-                LstbxCantAttend.Items.Clear();
+            whoCanAttend = new HashSet<int>();
+            whoCantAttend = new HashSet<int>();
+            LstbxCanAttend.Items.Clear();
+            LstbxCantAttend.Items.Clear();
 
-                DateTimeRange eventRange = Event.eventsList[eventIndex].eventRange;
-                TimeSpan duration = Event.eventsList[eventIndex].duration;
-                DateTime chosenTimeslot = Event.eventsList[eventIndex].chosenTimeSlot;
-                List<Attendee> attendees = Event.eventsList[eventIndex].attendees;
+            DateTimeRange eventRange = tempEvent.eventRange;
+            TimeSpan duration = tempEvent.duration;
+            DateTime chosenTimeslot = tempEvent.chosenTimeSlot;
+            List<Attendee> attendees = tempEvent.attendees;
 
-                //need to remake the conflicts list in case the Timeslots variable was cleared/changed
-                //*Possible Issue* There could be discrepancies in the list between making the timeslot and opening the EmailingWindow (if there were changes in some Event fields)
-                Timeslots.CalculateConflicts(eventRange, duration, Event.eventsList[eventIndex].attendees);
+            //need to remake the conflicts list in case the Timeslots variable was cleared/changed
+            //*Possible Issue* There could be discrepancies in the list between making the timeslot and opening the EmailingWindow (if there were changes in some Event fields)
+            Timeslots.CalculateConflicts(eventRange, duration, tempEvent.attendees);
 
-                //This block lists the attendees by name. It might be difficult to extract the emails the way this is implemented currently.
-                (whoCanAttend, whoCantAttend) = Timeslots.WhoCanAndCannotAttend(eventRange.start, chosenTimeslot, attendees.Count);
-                foreach (int canAttendIndex in whoCanAttend)
-                    LstbxCanAttend.Items.Add(new ListBoxItem() { Content = Event.eventsList[eventIndex].attendees[canAttendIndex].name,Tag = canAttendIndex });
-                foreach (int cantAttendIndex in whoCantAttend)
-                    LstbxCantAttend.Items.Add(new ListBoxItem() { Content = Event.eventsList[eventIndex].attendees[cantAttendIndex].name, Tag = cantAttendIndex });
-            }
+            //This block lists the attendees by name. It might be difficult to extract the emails the way this is implemented currently.
+            (whoCanAttend, whoCantAttend) = Timeslots.WhoCanAndCannotAttend(eventRange.start, chosenTimeslot, attendees.Count);
+            foreach (int canAttendIndex in whoCanAttend)
+                LstbxCanAttend.Items.Add(new ListBoxItem() { Content = tempEvent.attendees[canAttendIndex].name,Tag = canAttendIndex });
+            foreach (int cantAttendIndex in whoCantAttend)
+                LstbxCantAttend.Items.Add(new ListBoxItem() { Content = tempEvent.attendees[cantAttendIndex].name, Tag = cantAttendIndex });
+
         }
 
         private void BtnSendEmails_Click(object sender, RoutedEventArgs e)
@@ -71,24 +69,24 @@ namespace MeetingOrganizer
             };
             foreach (ListBoxItem item in LstbxCanAttend.Items)
             {
-                Attendee attendee = Event.eventsList[eventIndex].attendees[(int)item.Tag];
-                Event eventt = Event.eventsList [eventIndex];
+                Attendee attendee = tempEvent.attendees[(int)item.Tag];
+                Event eventt = tempEvent;
 
-                smtpClient.Send(appEmail, attendee.email, "Invite to Scheduled Event: " + Event.eventsList[eventIndex].name, "Hello " + attendee.name + ",\n" +
+                smtpClient.Send(appEmail, attendee.email, "Invite to Scheduled Event: " + tempEvent.name, "Hello " + attendee.name + ",\n" +
                 "You are invited to attend " + eventt.name + " scheduled at " + eventt.chosenTimeSlot + ".\n Thank you");
             }
             foreach (ListBoxItem item in LstbxCantAttend.Items)
             {
-                Attendee attendee = Event.eventsList[eventIndex].attendees[(int)item.Tag];
-                Event eventt = Event.eventsList[eventIndex];
+                Attendee attendee = tempEvent.attendees[(int)item.Tag];
+                Event eventt = tempEvent;
 
-                smtpClient.Send(appEmail, attendee.email, "Scheduled Event: " + Event.eventsList[eventIndex].name, "Hello " + attendee.name + ",\n\n" +
+                smtpClient.Send(appEmail, attendee.email, "Scheduled Event: " + tempEvent.name, "Hello " + attendee.name + ",\n\n" +
                 "We are sorry to let you know that you can't attend " + eventt.name + " scheduled at " + eventt.chosenTimeSlot + " because of your availabilities." +
                 "\n\nThank you");
             }
 
             MessageBox.Show("Emails are sent");
-
+            this.Close();
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

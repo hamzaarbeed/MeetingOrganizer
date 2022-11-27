@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MeetingOrganizer
 {
-    internal class DateTimeRange
+    public class DateTimeRange
     {
         public DateTime start { get; set; }
         public DateTime end { get; set; }
