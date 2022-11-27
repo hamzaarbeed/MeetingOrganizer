@@ -70,9 +70,13 @@ namespace MeetingOrganizer
             this.Close();
         }
 
+        private bool isRangeFieldsFilled() {
+            return (DtPkrAvailabilityFrom.Text != "" && DtPkrAvailabilityTo.Text != "" && CmbBxAvailabilityFrom.Text != "" && CmbBxAvailabilityTo.Text != "");
+        }
         private void BtnAddAvailability_Click(object sender, RoutedEventArgs e)
         {
-
+            if (!isRangeFieldsFilled())
+                return;
             DateTimeRange dateTimeRange = new DateTimeRange(DateTime.Parse(DtPkrAvailabilityFrom.Text + " " + CmbBxAvailabilityFrom.Text + ":00")
                 , DateTime.Parse(DtPkrAvailabilityTo.Text + " " + CmbBxAvailabilityTo.Text + ":00"));
 
